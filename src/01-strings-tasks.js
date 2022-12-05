@@ -127,8 +127,12 @@ function repeatString(value, count) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  let res = '';
+  if (str.indexOf(value) !== -1) {
+    res = str.replace(value, '');
+  }
+  return res;
 }
 
 /**
@@ -142,8 +146,8 @@ function removeFirstOccurrences(/* str, value */) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  return str.replace(/[<>]/g, '');
 }
 
 /**
@@ -156,8 +160,8 @@ function unbracketTag(/* str */) {
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
-function convertToUpperCase(/* str */) {
-  throw new Error('Not implemented');
+function convertToUpperCase(str) {
+  return str.toUpperCase();
 }
 
 /**
@@ -175,8 +179,8 @@ function convertToUpperCase(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -202,8 +206,47 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  function getTopSide() {
+    let topSide = '\u250C\u2510';
+    if (width > 2) {
+      for (let i = topSide.length; i < width; i += 1) {
+        topSide = `${topSide.slice(0, -1)}\u2500${topSide[topSide.length - 1]}`;
+      }
+    }
+    return topSide;
+  }
+  function getBottomSide() {
+    let bottomSide = '\u2514\u2518';
+    if (width > 2) {
+      for (let i = bottomSide.length; i < width; i += 1) {
+        bottomSide = `${bottomSide.slice(0, -1)}\u2500${bottomSide[bottomSide.length - 1]}`;
+      }
+    }
+    return bottomSide;
+  }
+  function getMiddleSide() {
+    let middleSide = '\u2502\u2502';
+    if (width > 2) {
+      for (let i = middleSide.length; i < width; i += 1) {
+        middleSide = `${middleSide.slice(0, -1)}\u0020${middleSide[middleSide.length - 1]}`;
+      }
+    }
+    return middleSide;
+  }
+  function setRectangle() {
+    let rectangle = '';
+    rectangle += `${getTopSide(width)}\n`;
+
+    if (height > 2) {
+      for (let i = 2; i < height; i += 1) {
+        rectangle += `${getMiddleSide(width)}\n`;
+      }
+    }
+    rectangle += `${getBottomSide(width)}\n`;
+    return rectangle;
+  }
+  return setRectangle(width, height);
 }
 
 /**
@@ -222,8 +265,18 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  let result = '';
+  for (let i = 0; i < str.length; i += 1) {
+    if (str.charCodeAt(i) >= 65 && str.charCodeAt(i) <= 90) {
+      result += String.fromCharCode(((str.charCodeAt(i) + 13 - 65) % 26) + 65);
+    } else if (str.charCodeAt(i) >= 97 && str.charCodeAt(i) <= 122) {
+      result += String.fromCharCode(((str.charCodeAt(i) + 13 - 97) % 26) + 97);
+    } else {
+      result += String.fromCharCode(str.charCodeAt(i));
+    }
+  }
+  return result;
 }
 
 /**
@@ -239,8 +292,10 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  if (typeof value === 'string' || value instanceof String) {
+    return true;
+  } return false;
 }
 
 /**
